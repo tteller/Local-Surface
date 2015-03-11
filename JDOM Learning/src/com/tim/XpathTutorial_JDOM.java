@@ -20,7 +20,7 @@ public static void main(String[] args) throws IOException {
 SAXBuilder sax = new SAXBuilder();
 Document doc = null;
 try {
-doc = sax.build("C://isGroupStaffPlanRequest.xml");
+doc = sax.build("files/getCopyEventNotes.xml");
 } catch (JDOMException e2) {
 // TODO Auto-generated catch block
 e2.printStackTrace();
@@ -31,8 +31,8 @@ e2.printStackTrace();
 // System.out.println(doc);
 
 // XPath Stuff
-List<String> xPathInstance = Arrays.asList("//*[@instance]",
-"//*[DBInstance]", "//*[fromDBInstance]");
+List<String> xPathInstance = Arrays.asList( "//*[local-name()='fromDBInstance']", "//*[@instance]",
+"//*[local-name()='DBInstance'");
 // System.out.println(xPathInstance);
 JDOMXPath xPathExpression = null;
 Element getElement = null;
@@ -42,24 +42,32 @@ for (int x = 0; x < xPathInstance.size(); x++) {
 
 try {
 xPathExpression = new JDOMXPath(xPathInstance.get(x));
-//System.out.println(xPathExpression);
+System.out.println(xPathExpression);
 } catch (JDOMException e1) {
 // TODO Auto-generated catch block
 e1.printStackTrace();
 }
 try {
+
 getElement = (Element) xPathExpression.selectSingleNode(doc);
 } catch (JDOMException e1) {
 // TODO Auto-generated catch block
+	System.out.println("didn't work");
 e1.printStackTrace();
 }
 //System.out.println(getElement.toString());
 //String getTheElementText = getElement.toString();
 //System.out.println(getElement.getText());
-//System.out.println(getElement.getAttributeValue("instance"));
-while (instanceExists == false) {
-System.out.println(getElement.getAttributeValue("instance"));
+System.out.println(getElement);
 
+while (instanceExists == false && getElement != null) {
+//System.out.println(getElement.getAttributeValue("instance"));
+
+	// TODO write a method to pass in the getElement object and return result
+	
+	
+	
+	
 if (getElement.getAttributeValue("instance").contains("401K")) {
 outPutXml(doc, "QASK", getElement);
 instanceExists = true;
