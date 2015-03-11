@@ -1,0 +1,12 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.fascore.com/BPMS/operations/2010/6" xmlns:typ="http://www.fascore.com/BPMSApi/2010/6/types">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ns:getCheckIfDisbursementCancelableRequest>
+         <typ:userId>?</typ:userId>
+         <typ:eventId>?</typ:eventId>
+         <typ:DBInstance>IN02</typ:DBInstance>
+         <!--Optional:-->
+         <typ:includeChildEvents>false</typ:includeChildEvents>
+      </ns:getCheckIfDisbursementCancelableRequest>
+   </soapenv:Body>
+</soapenv:Envelope>

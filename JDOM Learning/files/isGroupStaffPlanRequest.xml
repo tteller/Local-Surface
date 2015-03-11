@@ -1,0 +1,8 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://www.fascore.com/BPMS/operations/2010/6" xmlns:typ="http://www.fascore.com/BPMSApi/2010/6/types">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ns:getIsGroupStaffPlanRequest>
+         <typ:GroupToken groupId="932777-02" instance="PNP"/>
+      </ns:getIsGroupStaffPlanRequest>
+   </soapenv:Body>
+</soapenv:Envelope>
