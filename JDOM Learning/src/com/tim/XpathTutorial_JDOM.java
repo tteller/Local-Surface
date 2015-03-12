@@ -10,6 +10,8 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.XMLOutputter;
+import org.jdom2.xpath.XPathExpression;
+import org.jdom2.xpath.XPathFactory;
 import org.jdom2.xpath.jaxen.JDOMXPath;
 
 @SuppressWarnings("deprecation")
@@ -21,7 +23,7 @@ public class XpathTutorial_JDOM {
 		SAXBuilder sax = new SAXBuilder();
 		Document doc = null;
 		try {
-			doc = sax.build("files/isGroupStaffPlanRequest.xml");
+			doc = sax.build("files/getCheckIfDisbursementCancelableRequest.xml");
 		} catch (JDOMException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
@@ -35,6 +37,54 @@ public class XpathTutorial_JDOM {
 
 		"//*[local-name()='fromDBInstance' or local-name()='DBInstance']",
 				"//*[@instance]");
+		
+		
+		XPathFactory xpFactory = XPathFactory.instance();
+		
+		/*
+		String xpathQry = "//*[local-name()='fromDBInstance' or local-name()='DBInstance' or @instance]";
+		XPathExpression<Object> expr = xpFactory.compile(xpathQry);
+		List<Object> xPathSrchNodes = expr.evaluate(doc);
+		System.out.println("Search Nodes size:" + xPathSrchNodes.size());
+		
+		for (int i = 0; i < xPathSrchNodes.size(); i++){
+			Content content = (Content) xPathSrchNodes.get(i);
+			Element elm = (Element) xPathSrchNodes.get(i);
+			System.out.println("Content val: " + content.getValue());
+			System.out.println("Element Val: " + elm.getValue());
+			
+			elm.setText("QASK");
+			
+			System.out.println("Element Val: " + elm.getValue());
+			*/
+
+		String xpathQry = "//*[local-name()='fromDBInstance' or local-name()='DBInstance' or local-name()='GroupToken']";
+		XPathExpression<Object> expr = xpFactory.compile(xpathQry);
+		List<Object> xPathSrchNodes = expr.evaluate(doc);
+		System.out.println("Search Nodes size:" + xPathSrchNodes.size());
+		
+		for (int i = 0; i < xPathSrchNodes.size(); i++){
+			Content content = (Content) xPathSrchNodes.get(i);
+			Element elm = (Element) xPathSrchNodes.get(i);
+			System.out.println("Content val: " + content.getValue());
+			System.out.println("Element Val: " + elm.getValue());
+			elm.setAttribute("instance", "QASP");
+			
+			elm.setText("QASK");
+			
+			System.out.println("Element Val after changing: " + elm.getValue());
+			System.out.println("AttributeName: " + elm.getAttributeValue("instance"));
+			
+			XMLOutputter xmlOutput = new XMLOutputter();
+			xmlOutput.output(doc, System.out);
+			
+			
+		}
+		
+		
+		
+		/*
+		
 
 		Element getElement = null;
 		boolean instanceExists = false;
@@ -60,34 +110,22 @@ public class XpathTutorial_JDOM {
 				case 0: {
 
 					if (getElement.getText().contains("401K")) {
-						//outPutXml(doc, "QASK", getElement, 0);
-						getElement.setText("QASK");
-						XMLOutputter xmlOutput = new XMLOutputter();
-						xmlOutput.output(doc, System.out);
+						outPutXml(doc, "QASK", getElement, 0);
 						instanceExists = true;
 						done = true;
 						break;
 					} else if (getElement.getText().contains("PNP")) {
-						//outPutXml(doc, "QASP", getElement, 0);
-						getElement.setText("QASP");
-						XMLOutputter xmlOutput = new XMLOutputter();
-						xmlOutput.output(doc, System.out);
+						outPutXml(doc, "QASP", getElement, 0);
 						instanceExists = true;
 						done = true;
 						break;
 					} else if (getElement.getText().contains("INST")) {
-						//outPutXml(doc, "QASI", getElement, 0);
-						getElement.setText("QASI");
-						XMLOutputter xmlOutput = new XMLOutputter();
-						xmlOutput.output(doc, System.out);
+						outPutXml(doc, "QASI", getElement, 0);
 						instanceExists = true;
 						done = true;
 						break;
 					} else if (getElement.getText().contains("IN02")) {
-						//outPutXml(doc, "QAS2", getElement, 0);
-						getElement.setText("QAS2");
-						XMLOutputter xmlOutput = new XMLOutputter();
-						xmlOutput.output(doc, System.out);
+						outPutXml(doc, "QAS2", getElement, 0);
 						instanceExists = true;
 						done = true;
 						break;
@@ -100,38 +138,25 @@ public class XpathTutorial_JDOM {
 
 					if (getElement.getAttributeValue("instance").contains(
 							"401K")) {
-						//outPutXml(doc, "QASK", getElement, 1);
-						//System.out.println("QASK");
-						getElement.setAttribute("instance", "QASK");
-						XMLOutputter xmlOutput = new XMLOutputter();
-						xmlOutput.output(doc, System.out);
+						outPutXml(doc, "QASK", getElement, 1);
 						instanceExists = true;
 						done = true;
 						break;
 					} else if (getElement.getAttributeValue("instance")
 							.contains("PNP")) {
-						//outPutXml(doc, "QASP", getElement, 1);
-						getElement.setAttribute("instance", "QASP");
-						XMLOutputter xmlOutput = new XMLOutputter();
-						xmlOutput.output(doc, System.out);
+						outPutXml(doc, "QASP", getElement, 1);
 						instanceExists = true;
 						done = true;
 						break;
 					} else if (getElement.getAttributeValue("instance")
 							.contains("INST")) {
-						//outPutXml(doc, "QASI", getElement, 1);
-						getElement.setAttribute("instance", "QASI");
-						XMLOutputter xmlOutput = new XMLOutputter();
-						xmlOutput.output(doc, System.out);
+						outPutXml(doc, "QASI", getElement, 1);
 						instanceExists = true;
 						done = true;
 						break;
 					} else if (getElement.getAttributeValue("instance")
 							.contains("IN02")) {
-						//outPutXml(doc, "QAS2", getElement, 1);
-						getElement.setAttribute("instance", "QAS2");
-						XMLOutputter xmlOutput = new XMLOutputter();
-						xmlOutput.output(doc, System.out);
+						outPutXml(doc, "QAS2", getElement, 1);
 						instanceExists = true;
 						done = true;
 						break;
@@ -144,10 +169,10 @@ public class XpathTutorial_JDOM {
 			}
 
 		}
-
+*/
 	}
 
-/*	private static void outPutXml(Document doc, String setInstance,
+	private static void outPutXml(Document doc, String setInstance,
 			Element getElement, int t) throws IOException {
 		// Outputting - Changing the XML
 		if (t == 1) {
@@ -162,5 +187,5 @@ public class XpathTutorial_JDOM {
 			xmlOutput.output(doc, System.out);
 		}
 
-	}*/
+	}
 }
