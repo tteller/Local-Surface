@@ -7,7 +7,7 @@
          <typ:systemUserId>?</typ:systemUserId>
          <typ:automatedNote>?</typ:automatedNote>
          <typ:fromEventId>?</typ:fromEventId>
-         <typ:fromDBInstance>IN02</typ:fromDBInstance>
+         <typ:fromDBInstance>401K</typ:fromDBInstance>
          <typ:toDBInstance>?</typ:toDBInstance>
       </ns:getCopyEventNotesRequest>
 	  

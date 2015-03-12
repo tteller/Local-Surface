@@ -4,7 +4,7 @@
       <ns:getCheckIfDisbursementCancelableRequest>
          <typ:userId>?</typ:userId>
          <typ:eventId>?</typ:eventId>
-         <typ:DBInstance>IN02</typ:DBInstance>
+         <typ:DBInstance>INST</typ:DBInstance>
          <!--Optional:-->
          <typ:includeChildEvents>false</typ:includeChildEvents>
       </ns:getCheckIfDisbursementCancelableRequest>

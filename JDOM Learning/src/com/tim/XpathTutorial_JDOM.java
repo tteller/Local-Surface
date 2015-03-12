@@ -4,26 +4,24 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-import org.jdom2.Attribute;
+import org.jdom2.Content;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.XMLOutputter;
-import org.jdom2.xpath.XPath;
 import org.jdom2.xpath.jaxen.JDOMXPath;
 
 @SuppressWarnings("deprecation")
 public class XpathTutorial_JDOM {
 
-	@SuppressWarnings("unchecked")
 	public static void main(String[] args) throws IOException {
 
 		// Open a XML File
 		SAXBuilder sax = new SAXBuilder();
 		Document doc = null;
 		try {
-			doc = sax.build("files/isGroupStaffPlanRequest.xml");
+			doc = sax.build("files/getCopyEventNotes.xml");
 		} catch (JDOMException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
@@ -36,37 +34,18 @@ public class XpathTutorial_JDOM {
 		List<String> xPathInstance = Arrays.asList(
 
 		"//*[local-name()='fromDBInstance' or local-name()='DBInstance']",
-				"//*[local-name()='@instance']");
+				"//*[@instance]");
 
-		JDOMXPath xPathExpression = null;
 		Element getElement = null;
 		boolean instanceExists = false;
 		boolean done = false;
 		for (int x = 0; x < xPathInstance.size(); x++) {
 			getElement = null;
 
-			/*
-			 * try { xPathExpression = new JDOMXPath(xPathInstance.get(x)); //
-			 * System.out.println(xPathExpression); } catch (JDOMException e1) {
-			 * // TODO Auto-generated catch block e1.printStackTrace(); }
-			 */
 			try {
 
 				getElement = (Element) JDOMXPath.selectSingleNode(doc,
 						xPathInstance.get(x));
-
-				//TODO:  Figure out this next line.
-
-
-				System.out.println(getElement + " " + x);
-				System.out.println(doc);
-
-				
-				/*if ((((List<String>) getElement).isEmpty())) {
-					System.out.println("Tim Rocks");
-					}
-				*/	
-				
 
 			} catch (JDOMException e1) {
 				// TODO Auto-generated catch block
@@ -75,7 +54,6 @@ public class XpathTutorial_JDOM {
 			}
 
 			while (!instanceExists && !done && getElement != null) {
-				// TODO might want to change this to a CASE thing
 
 				switch (x) {
 
