@@ -1,8 +1,12 @@
 package com.tim;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
 
 import org.jdom2.Content;
 import org.jdom2.Document;
@@ -16,26 +20,33 @@ import org.jdom2.xpath.jaxen.JDOMXPath;
 
 @SuppressWarnings("deprecation")
 public class XpathTutorial_JDOM {
+	private static String xpathQry = "";
+	private static String fromDBInstance = "";
+
+	private static String dbInstance = "";
+	private static String attrInstance = "";
+
+	private static String db401K = "";
+	private static String dbINST = "";
+	private static String dbPNP = "";
+	private static String dbIN02 = "";
+	private static Properties props = null;
+	private static String PROPERTIES_FILE = "files/config.properties";
+	private static String xmlFile = "";
 
 	public static void main(String[] args) throws IOException {
 
-		final String xpathQry = "//*[local-name()='fromDBInstance' or local-name()='DBInstance' or local-name()='GroupToken']";
-
-		final String FROM_DB_INSTANCE = "fromDBInstance";
-		final String DBINSTANCE = "DBInstance";
-		final String ATTR_INSTANCE = "instance";
-
-		final String QASK = "QASK";
-		final String QASI = "QASI";
-		final String QASP = "QASP";
-		final String QAS2 = "QAS2";
-
+		getProperties();
+/*		System.out.println(xmlFile + " " + xpathQry + " " + fromDBInstance
+				+ " " + dbInstance + " " + db401K + " " + dbINST + " " + dbPNP
+				+ " " + dbIN02);
+*/
 		// Open a XML File
 		SAXBuilder sax = new SAXBuilder();
 		Document doc = null;
 		try {
 			doc = sax
-					.build("files/getCheckIfDisbursementCancelableRequest.xml");
+					.build(xmlFile);
 		} catch (JDOMException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
@@ -45,10 +56,12 @@ public class XpathTutorial_JDOM {
 		}
 
 		// XPath Stuff
-		List<String> xPathInstance = Arrays.asList(
-
-		"//*[local-name()='fromDBInstance' or local-name()='DBInstance']",
-				"//*[@instance]");
+		/*
+		 * List<String> xPathInstance = Arrays.asList(
+		 * 
+		 * "//*[local-name()='fromDBInstance' or local-name()='DBInstance']",
+		 * "//*[@instance]");
+		 */
 
 		XPathFactory xpFactory = XPathFactory.instance();
 
@@ -61,11 +74,14 @@ public class XpathTutorial_JDOM {
 			Element elm = (Element) xPathSrchNodes.get(i);
 			System.out.println("Content val: " + content.getValue());
 			System.out.println("Element Val: " + elm.getValue());
+			
+			//TODO: need to do the conditions in here.  If the element is null, then the value is in the 
 			elm.setAttribute("instance", "QASP");
 
 			elm.setText("QASK");
 
 			System.out.println("Element Val after changing: " + elm.getValue());
+			
 			System.out.println("AttributeName: "
 					+ elm.getAttributeValue("instance"));
 
@@ -123,6 +139,27 @@ public class XpathTutorial_JDOM {
 		 * 
 		 * }
 		 */
+	}
+
+	private static void getProperties() throws FileNotFoundException,
+			IOException {
+		FileInputStream is = new FileInputStream(PROPERTIES_FILE);
+		props = new Properties();
+		props.load(is);
+
+		System.out.println("There are: " + props.size() + " properties");
+
+		xmlFile = props.getProperty("xmlFile");
+		xpathQry = props.getProperty("xpathQry");
+		fromDBInstance = props.getProperty("fromDBInstance");
+		dbInstance = props.getProperty("dbInstance");
+		attrInstance = props.getProperty("attrInstance");
+		db401K = props.getProperty("db401K");
+		dbINST = props.getProperty("dbINST");
+		dbPNP = props.getProperty("dbPNP");
+		dbIN02 = props.getProperty("dbIN02");
+
+
 	}
 
 	private static void outPutXml(Document doc, String setInstance,
