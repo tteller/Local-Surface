@@ -2,7 +2,7 @@
    <soapenv:Header/>
    <soapenv:Body>
       <ns:getIsGroupStaffPlanRequest>
-         <typ:GroupToken groupId="932777-02" instance="PNP"/>
+         <typ:GroupToken groupId="932777-02" instance="IN02"/>
       </ns:getIsGroupStaffPlanRequest>
    </soapenv:Body>
 </soapenv:Envelope>
